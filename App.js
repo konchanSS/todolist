@@ -21,7 +21,7 @@ export default class App extends Component {
 
     render() {
         return (
-			<View style={{flex:1}}>
+            <View style={{flex:1}}>
                 <View style={{flex:10, paddingTop:20, backgroundColor:'#DDDDDD'}}>
                     <FlatList
                         style={{flex:1}}
@@ -30,21 +30,21 @@ export default class App extends Component {
                     />
                 </View>
                 <View style={{flex:1, flexDirection: 'row'}}>
-				<TextInput
-					style={{flex:3}}
-					placeholder="Type here to task"
-					onChangeText={(text) => this.setState({text})}
-					value={this.state.text}
-                />
+                    <TextInput
+                        style={{flex:3}}
+                        placeholder="Type here to task"
+                        onChangeText={(text) => this.setState({text})}
+                        value={this.state.text}
+                    />
                     <View style={{flex:1, justifyContent:'center'}}>
-				<Button
-                    style={{flex:1}}
-					onPress={this._onPressAdd}
-					title='追加'
-                />
+                        <Button
+                            style={{flex:1}}
+                            onPress={this._onPressAdd}
+                            title='追加'
+                        />
                     </View>
                 </View>
-			</View>
+            </View>
         );
     }
 
@@ -57,13 +57,13 @@ export default class App extends Component {
         });
         this.setState({task:this.state.task});
         console.log(this.state.task);
-    }
+    };
 
     _onPressAdd = () => {
         this.state.task.push({key:this.state.key, text: this.state.text});
         this.setState({text:'', key:this.state.key+1});
         console.log(this.state.task);
-    }
+    };
 }
 
 const styles = StyleSheet.create({
