@@ -6,10 +6,15 @@ import {
     Button,
     FlatList,
     Text,
-    TouchableOpacity
+    TouchableOpacity,
 } from 'react-native';
 
-export default class App extends Component {
+import {
+    StackNavigator,
+} from 'react-navigation';
+
+
+export class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -26,7 +31,7 @@ export default class App extends Component {
                     <FlatList
                         style={{flex:1}}
                         data={this.state.task}
-                        renderItem={({item}) => <TouchableOpacity onPress={() => this._onPressCell(item.key)}><Text style={styles.item}>{item.text}</Text></TouchableOpacity>}
+                        renderItem={({item}) => <TouchableOpacity onPress={() => this._onPressCell(item)}><Text style={styles.item}>{item.text}</Text></TouchableOpacity>}
                     />
                 </View>
                 <View style={{flex:1, flexDirection: 'row'}}>
@@ -48,15 +53,10 @@ export default class App extends Component {
         );
     }
 
-    _onPressCell = (key) => {
-        console.log(key);
-        this.state.task.some((value, index) => {
-            if(value.key == key) {
-                this.state.task.splice(index);
-            }
+    _onPressCell = (item) => {
+        this.props.navigation.navigate('Detail', {
+            item:item
         });
-        this.setState({task:this.state.task});
-        console.log(this.state.task);
     };
 
     _onPressAdd = () => {
@@ -64,6 +64,39 @@ export default class App extends Component {
         this.setState({text:'', key:this.state.key+1});
         console.log(this.state.task);
     };
+}
+
+export class Detail extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            task : this.props.navigation.state.params.item
+        }
+    }
+    render() {
+        return(
+            <View style={{flex:1}}>
+                <Text>{this.state.task.text}</Text>
+            </View>
+        )
+    }
+}
+
+const RootStack = StackNavigator({
+    Home: { screen: Home},
+    Detail: { screen: Detail},
+    },
+    {
+        initialRouteName: 'Home',
+    }
+);
+
+
+export default class App extends Component{
+    render() {
+        return <RootStack/>;
+    }
 }
 
 const styles = StyleSheet.create({
